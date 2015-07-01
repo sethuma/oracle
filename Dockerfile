@@ -1,14 +1,21 @@
+#OS REquirements
+# Requires 2gb swap space
 FROM centos:centos7
 
-# Pre-requirements
+# Pre-requirements 
+# OS Updates
 RUN yum install -y libaio bc; \
     yum clean all
+# End of Pre-Requirments
 
 # Install Oracle XE
+# Fetch package from local repo
 ADD rpm/oracle-xe-11.2.0-1.0.x86_64.rpm.tar.gz /tmp/
 RUN yum localinstall -y /tmp/oracle-xe-11.2.0-1.0.x86_64.rpm;
 RUN yum install wget -y;
 ADD config/start.sh /
+
+# Env setup
 RUN adduser oracle
 RUN groupadd dba
 # Configure instance
